@@ -1,5 +1,4 @@
 export
-
 DBT=dbt
 DBT_PROFILE=data_transformation
 DBT_ENV=dev
@@ -23,6 +22,7 @@ endif
 
 all: venv install install_dbt_packages load_yml seed run_stage_models run_vault_models
 
+prerequisite: venv install install_dbt_packages load_yml seed
 # ifeq ($(OS),Windows_NT)
 # 	loadenv:
 #     	@for /F "delims=" %%i in ('type .env ^| findstr /v /r "^#" ^| findstr /r /c:"."') do @set %%i
