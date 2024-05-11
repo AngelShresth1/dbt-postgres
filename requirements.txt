@@ -1,0 +1,3 @@
+git+https://github.com/AngelShresth1/dbt-iceberg-snowflake.git
+python-dotenv
+dbt-postgres

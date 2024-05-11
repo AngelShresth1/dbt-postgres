@@ -1,0 +1,80 @@
+
+#__author__: "GritFeat Solutions - Nepal"
+#__copyright__: "Copyright 2022, GritFeat Solutions, Nepal."
+#__version__: "0.0.1"
+#__status__: "Dev"
+#__created_on__: "10/05/2024"
+#__maintainer__: "Krisha Maharjan"
+
+
+name: 'data_transformation'
+version: '1.0.0'
+config-version: 2
+
+profile: 'data_transformation'
+
+
+
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# tests:
+#   +enabled: true
+#   +severity: error
+
+vars:
+  patient: "{{env_var('ENV_PATIENT_TABLE')}}"
+  eligibility: "{{env_var('ENV_ELIGIBILITY_TABLE')}}"
+  coverage: "{{env_var('ENV_COVERAGE_TABLE')}}"
+  
+
+
+seeds:
+  data_transformation:
+    eligibility: 
+    landing_patient:
+    landing_coverage:
+
+models:
+  data_transformation:
+    raw:
+      initial:
+        +materialized: view
+        +schema: uh_raw
+
+      combine:
+        +materialized: view
+        +schema: uh_raw
+    
+      link:
+        +materialized: view
+        +schema: uh_raw
+
+    stage:
+      +materialized: view
+      +schema: uh_int
+
+    hubs:
+      +materialized: table
+      +schema: uh_core
+
+    sats:
+      +materialized: table
+      +schema: uh_core
+
+    links:
+      +materialized: table
+      +schema: uh_core
+      
+
+
+

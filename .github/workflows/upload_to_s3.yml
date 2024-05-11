@@ -1,0 +1,52 @@
+
+  
+  
+#__author__: "GritFeat Solutions - Nepal"
+#__copyright__: "Copyright 2022, GritFeat Solutions, Nepal."
+#__version__: "0.0.1"
+#__status__: "Dev"
+#__created_on__: "10/05/2024"
+#__maintainer__: "Krisha Maharjan"
+  
+
+name: Upload to S3 with Versioned Filename
+on:
+  push:
+    branches:
+      - feature/data_transformation
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Current Directory
+        run: ls -a
+
+      - name: Enable S3 Bucket Versioning
+        run: |
+          aws s3api put-bucket-versioning --bucket gf-unveil --versioning-configuration Status=Enabled
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Create tar archive
+        run: tar -czf "artifact_v${{ github.run_number }}.tar.gz" "/home/runner/work/data_transformation/data_transformation/"
+
+      - name: Install AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+          
+      - name: Upload tar archive to S3 with versioned filename
+        run: |
+          aws s3 cp "artifact_v${{ github.run_number }}.tar.gz" s3://gf-unveil/dbt-postgres/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}

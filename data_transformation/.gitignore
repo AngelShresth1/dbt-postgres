@@ -1,0 +1,13 @@
+
+target/
+dbt_packages/
+logs/
+
+*../.apis/
+
+
+
+.venv/
+*.csv
+profiles.yml
+schema.yml

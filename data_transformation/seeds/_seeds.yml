@@ -1,0 +1,70 @@
+version: 2
+
+seeds:
+  - name: eligibility
+    config:
+      schema: uh_lnd
+      tags: tuva
+      column_types:
+        patient_id: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        member_id: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        subscriber_id: varchar(255)
+        gender: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        race: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        birth_date: varchar(255)
+        death_date: varchar(255)
+        death_flag: varchar(255)
+        enrollment_start_date: varchar(255)
+        enrollment_end_date: varchar(255)
+        payer: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        payer_type: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        plan: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        original_reason_entitlement_code: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        dual_status_code: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        medicare_status_code: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        first_name: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        last_name: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        social_security_number: varchar(255)
+        subscriber_relation: varchar(255)
+        address: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        city: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        state: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        zip_code: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        phone: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+        data_source: |
+          {%- if target.type in ("bigquery", "databricks") -%} string {%- else -%} varchar(255) {%- endif -%}
+
+  - name: landing_patient
+    config:
+      schema: uh_lnd
+      column_types:
+        VALUE: text
+        _AIRBYTE_AB_ID: text
+        _AIRBYTE_EMITTED_AT: text
+        _AIRBYTE_DATA: jsonb
+
+  - name: landing_coverage
+    config:
+      schema: uh_lnd
+      column_types:
+        VALUE: text
+        _AIRBYTE_AB_ID: text
+        _AIRBYTE_EMITTED_AT: text
+        _AIRBYTE_DATA: jsonb
